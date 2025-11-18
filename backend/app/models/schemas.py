@@ -86,6 +86,17 @@ class TestCaseSchema(BaseModel):
     created_at: datetime
 
 
+class TestCaseResponse(BaseModel):
+    """Response model for generated test cases."""
+    test_id: str
+    feature: str
+    test_scenario: str
+    test_steps: List[str]
+    expected_result: str
+    grounded_in: str  # Source document - CRITICAL for anti-hallucination
+    test_type: str  # positive, negative, edge_case
+
+
 class SourceDocumentSchema(BaseModel):
     """Schema for source document reference."""
     text: str
