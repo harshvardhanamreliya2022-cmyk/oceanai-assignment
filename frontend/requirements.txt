@@ -1,0 +1,12 @@
+# ================================
+# QA Agent Frontend Dependencies
+# ================================
+
+# Streamlit Framework
+streamlit==1.29.0
+
+# HTTP Client
+requests==2.31.0
+
+# Data Handling
+pandas==2.1.4
