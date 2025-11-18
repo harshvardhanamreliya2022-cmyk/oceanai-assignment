@@ -9,6 +9,12 @@ from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from backend.app.api import knowledge_base
+from backend.app.utils.filesystem import ensure_directories
+from backend.app.utils.logger import setup_logging
+
+# Setup logging
+logger = setup_logging()
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -35,16 +41,20 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup_event():
     """Initialize application on startup."""
-    # TODO: Initialize ChromaDB
-    # TODO: Load embedding model
-    # TODO: Setup logging
-    print("🚀 QA Agent API starting up...")
+    logger.info("🚀 QA Agent API starting up...")
+
+    # Ensure required directories exist
+    ensure_directories()
+    logger.info("✅ Directory structure verified")
+
+    # RAG service will be initialized lazily on first request
+    logger.info("✅ API ready to serve requests")
 
 
 @app.on_event("shutdown")
 async def shutdown_event():
     """Cleanup on application shutdown."""
-    print("👋 QA Agent API shutting down...")
+    logger.info("👋 QA Agent API shutting down...")
 
 
 @app.get("/health")
@@ -79,9 +89,9 @@ async def root():
     }
 
 
-# API Routes will be added here
-# TODO: Add document upload routes
-# TODO: Add knowledge base routes
+# API Routes
+app.include_router(knowledge_base.router)
+
 # TODO: Add test case generation routes
 # TODO: Add Selenium script generation routes
 
