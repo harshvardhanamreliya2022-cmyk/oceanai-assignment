@@ -1,0 +1,353 @@
+E-SHOP UI/UX DESIGN GUIDELINES
+================================
+
+Version: 1.5
+Last Updated: November 2025
+Scope: Checkout Page Interface
+
+
+COLOR PALETTE
+-------------
+
+Primary Colors:
+- Success Green: #4CAF50 (Buttons, positive messages, prices, totals)
+- Error Red: #F44336 (Error messages, delete/remove actions)
+- Warning Red: #FF0000 (Required field indicators, form validation errors)
+
+Secondary Colors:
+- Neutral Gray: #808080 (Secondary buttons, borders)
+- Dark Gray: #333 (Headers, main text)
+- Light Gray: #555 (Labels, secondary text)
+
+Background Colors:
+- Page Background: #f5f5f5
+- Card Background: #ffffff
+- Section Background: #fafafa
+- Order Summary: #f9f9f9
+
+
+TYPOGRAPHY
+----------
+
+Font Family: Arial, sans-serif
+
+Heading Sizes:
+- H1 (Page Title): 24px, color: #333, margin-bottom: 20px
+- H2 (Section Headers): 20px, color: #333, margin-bottom: 20px
+
+Text Sizes:
+- Body Text: 14px
+- Product Names: 14px, font-weight: bold
+- Price Display: 14px, font-weight: bold, color: #4CAF50
+- Total Display: 24px, font-weight: bold, color: #4CAF50
+- Error Messages: 14px, color: #F44336
+- Success Messages: 14px, color: #4CAF50
+
+
+BUTTONS
+-------
+
+Primary Button (Actions like "Add to Cart", "Apply Discount", "Pay Now"):
+- Background: #4CAF50
+- Color: white
+- Padding: 8px 16px
+- Border-radius: 4px
+- Font-size: 14px
+- Hover: opacity 0.9
+
+Secondary Button (Cancel, Back):
+- Background: #808080
+- Color: white
+- Padding: 8px 16px
+- Border-radius: 4px
+- Font-size: 14px
+- Hover: opacity 0.9
+
+Danger Button (Remove, Delete):
+- Background: #F44336
+- Color: white
+- Padding: 8px 16px
+- Border-radius: 4px
+- Font-size: 14px
+- Hover: opacity 0.9
+
+
+FORM ELEMENTS
+-------------
+
+Input Fields (Text, Email):
+- Width: 100%
+- Padding: 10px
+- Border: 1px solid #ddd
+- Border-radius: 4px
+- Font-size: 14px
+
+Textarea (Address field):
+- Width: 100%
+- Padding: 10px
+- Border: 1px solid #ddd
+- Border-radius: 4px
+- Rows: 3
+
+Radio Buttons:
+- Margin-right: 8px from label
+- Grouped with 10px margin between options
+
+Labels:
+- Display: block
+- Margin-bottom: 5px
+- Font-weight: bold
+- Color: #555
+
+Required Field Indicator:
+- Red asterisk (*) after label text
+- Color: #F44336
+
+
+VALIDATION AND FEEDBACK
+------------------------
+
+Error Messages:
+- Color: #F44336 (Red)
+- Font-size: 14px
+- Margin-top: 5px
+- Display below relevant field
+- Initially hidden (display: none)
+- Show on validation error
+
+Success Messages:
+- Color: #4CAF50 (Green)
+- Font-size: 14px
+- Margin-top: 5px
+- Show on successful action
+- Initially hidden (display: none)
+
+Required Field Validation:
+- Show error message in red if field is empty on submit
+- Error text examples:
+  * "Name is required"
+  * "Valid email is required"
+  * "Address is required"
+
+
+SECTION LAYOUT
+--------------
+
+All sections (Cart, Discount, Customer Info, Shipping, Payment):
+- Margin: 20px 0
+- Padding: 20px
+- Border: 1px solid #ddd
+- Border-radius: 4px
+- Background: #fafafa
+
+Product List:
+- Border: 1px solid #ddd
+- Border-radius: 4px
+- Padding: 15px
+- Margin-bottom: 20px
+
+Product Items:
+- Display: flex
+- Justify-content: space-between
+- Align-items: center
+- Padding: 10px 0
+- Border-bottom: 1px solid #eee
+- Last item: no border-bottom
+
+
+INTERACTIVE ELEMENTS
+--------------------
+
+Shopping Cart:
+- Display "Your cart is empty" when no items
+- Show product items with name, price, and remove button
+- Update total dynamically when items added/removed
+- Total displayed on right, bold, large font
+
+Discount Code Section:
+- Input field for code entry
+- "Apply Discount" button
+- Show error message for invalid codes
+- Show success message for valid codes
+- Update total immediately when discount applied
+
+Order Summary:
+- Show subtotal
+- Show shipping cost (based on selected method)
+- Show discount amount (if applied)
+- Show final total
+- Update dynamically when any selection changes
+
+
+INTERACTION BEHAVIORS
+---------------------
+
+Button Hover Effects:
+- All buttons should have opacity: 0.9 on hover
+- Cursor: pointer
+
+Form Submission:
+- Validate all required fields
+- Show all applicable error messages simultaneously
+- Do not submit if validation fails
+- Clear form and cart on successful submission
+- Show success alert message
+
+Dynamic Updates:
+- Cart total updates when items added/removed
+- Order summary updates when shipping method changes
+- Order summary updates when discount applied
+- Error messages hide when user starts typing
+
+Responsive Feedback:
+- Show loading/processing states during operations
+- Immediate visual feedback for user actions
+- Clear success/error states
+
+
+ACCESSIBILITY
+-------------
+
+Form Labels:
+- All form fields must have associated labels
+- Labels clearly indicate purpose
+- Required fields marked with asterisk
+
+Error Messaging:
+- Error messages appear near relevant fields
+- Error text is clear and actionable
+- Multiple errors can be shown simultaneously
+
+Button Text:
+- Clear action verbs ("Add to Cart", "Apply Discount", "Pay Now")
+- Button purpose obvious from text
+- Consistent terminology throughout
+
+
+SPACING AND ALIGNMENT
+---------------------
+
+Container:
+- Max-width: 800px
+- Margin: 0 auto (centered)
+- Padding: 30px
+
+Section Spacing:
+- Margin between sections: 20px
+- Padding within sections: 20px
+
+Form Groups:
+- Margin-bottom: 15px
+
+Product Items:
+- Padding: 10px 0
+- Items evenly spaced
+
+
+USER FLOW
+---------
+
+Expected Interaction Sequence:
+1. User views available products
+2. User adds products to cart
+3. User optionally applies discount code
+4. User fills in customer information
+5. User selects shipping method
+6. User selects payment method
+7. User reviews order summary
+8. User clicks "Pay Now"
+9. System validates all inputs
+10. System shows success message or error messages
+
+
+ERROR STATES
+------------
+
+Empty Cart Submission:
+- Alert: "Your cart is empty!"
+
+Missing Required Name:
+- Display: "Name is required" in red below name field
+
+Invalid Email:
+- Display: "Valid email is required" in red below email field
+- Validation: Email must contain @ symbol
+
+Missing Address:
+- Display: "Address is required" in red below address field
+
+Invalid Discount Code:
+- Display: "Invalid discount code" in red below code input
+- Valid codes: SAVE15, FIRST10, WELCOME5
+
+
+SUCCESS STATES
+--------------
+
+Discount Applied:
+- Display: "Discount applied!" in green below code input
+- Cart total updates to show discounted amount
+
+Order Submitted:
+- Alert: "Order submitted successfully! Thank you for your purchase."
+- Clear all form fields
+- Reset cart to empty
+- Remove discount if applied
+
+
+BRAND GUIDELINES
+----------------
+
+Tone: Professional, clean, modern
+Feel: Trustworthy, efficient, user-friendly
+Priority: Clarity over complexity
+Approach: Minimize clicks, maximize clarity
+
+
+TESTING CHECKLIST
+-----------------
+
+Visual Testing:
+- All colors match specifications
+- Fonts and sizes are correct
+- Spacing is consistent
+- Buttons styled correctly
+- Forms aligned properly
+
+Functional Testing:
+- All validation messages display correctly
+- Error colors are red (#F44336)
+- Success colors are green (#4CAF50)
+- Required field indicators visible
+- Dynamic updates work properly
+
+Accessibility Testing:
+- All form fields have labels
+- Error messages are clear
+- Tab navigation works
+- Color contrast sufficient
+
+
+NOTES
+-----
+
+- All measurements in pixels unless otherwise specified
+- Colors specified in hex format
+- Border-radius: 4px for consistent rounded corners
+- Box-shadow: 0 2px 10px rgba(0,0,0,0.1) for cards
+- Maintain consistent spacing throughout
+- Ensure mobile responsiveness (out of scope for this document)
+
+
+DOCUMENT HISTORY
+----------------
+
+v1.5 - November 2025 - Updated color specifications
+v1.4 - October 2025 - Added accessibility guidelines
+v1.3 - September 2025 - Refined button styles
+v1.2 - August 2025 - Added error state specifications
+v1.1 - July 2025 - Initial typography guidelines
+v1.0 - June 2025 - Initial document creation
+
+
+END OF DOCUMENT

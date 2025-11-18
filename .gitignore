@@ -29,6 +29,7 @@ env/
 ENV/
 env.bak/
 venv.bak/
+.venv
 
 # IDE
 .vscode/
@@ -52,6 +53,19 @@ data/logs/
 data/uploads/
 data/vectordb/
 data/scripts/
+# Environment variables
+.env
+.env.local
+
+# Data directories
+data/uploads/*
+data/vectordb/*
+data/scripts/*
+data/logs/*
+!data/uploads/.gitkeep
+!data/vectordb/.gitkeep
+!data/scripts/.gitkeep
+!data/logs/.gitkeep
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -64,6 +78,8 @@ htmlcov/
 .hypothesis/
 
 # mypy
+
+# MyPy
 .mypy_cache/
 .dmypy.json
 dmypy.json
@@ -105,3 +121,8 @@ models/
 # Generated files
 generated_scripts/
 test_results/
+# Test outputs
+*.log
+
+# OS
+Thumbs.db

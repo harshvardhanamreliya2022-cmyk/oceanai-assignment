@@ -1,0 +1,442 @@
+{
+  "api_version": "2.0",
+  "base_url": "https://api.eshop.example.com/v2",
+  "description": "E-Shop Checkout API Endpoints",
+  "last_updated": "2025-11-15",
+  "endpoints": {
+    "cart": {
+      "add_to_cart": {
+        "method": "POST",
+        "path": "/cart/add",
+        "description": "Add a product to the shopping cart",
+        "parameters": {
+          "product_id": {
+            "type": "string",
+            "required": true,
+            "description": "Unique identifier for the product"
+          },
+          "product_name": {
+            "type": "string",
+            "required": true,
+            "description": "Name of the product"
+          },
+          "price": {
+            "type": "number",
+            "required": true,
+            "description": "Price of the product in USD"
+          },
+          "quantity": {
+            "type": "integer",
+            "required": false,
+            "default": 1,
+            "description": "Number of items to add"
+          }
+        },
+        "returns": {
+          "cart_id": {
+            "type": "string",
+            "description": "Unique cart identifier"
+          },
+          "total_items": {
+            "type": "integer",
+            "description": "Total number of items in cart"
+          },
+          "subtotal": {
+            "type": "number",
+            "description": "Cart subtotal before discounts and shipping"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Whether the operation succeeded"
+          }
+        },
+        "example_request": {
+          "product_id": "LPTP-001",
+          "product_name": "Laptop Pro 15",
+          "price": 1299.99,
+          "quantity": 1
+        },
+        "example_response": {
+          "cart_id": "cart_abc123",
+          "total_items": 3,
+          "subtotal": 1379.97,
+          "success": true
+        }
+      },
+      "remove_from_cart": {
+        "method": "DELETE",
+        "path": "/cart/remove/{item_id}",
+        "description": "Remove an item from the shopping cart",
+        "parameters": {
+          "item_id": {
+            "type": "string",
+            "required": true,
+            "description": "Cart item identifier to remove"
+          }
+        },
+        "returns": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether the removal succeeded"
+          },
+          "message": {
+            "type": "string",
+            "description": "Confirmation message"
+          },
+          "new_total": {
+            "type": "number",
+            "description": "Updated cart total"
+          }
+        }
+      },
+      "get_cart": {
+        "method": "GET",
+        "path": "/cart/{cart_id}",
+        "description": "Retrieve current cart contents",
+        "parameters": {
+          "cart_id": {
+            "type": "string",
+            "required": true,
+            "description": "Cart identifier"
+          }
+        },
+        "returns": {
+          "items": {
+            "type": "array",
+            "description": "Array of cart items"
+          },
+          "subtotal": {
+            "type": "number",
+            "description": "Cart subtotal"
+          },
+          "item_count": {
+            "type": "integer",
+            "description": "Total number of items"
+          }
+        }
+      }
+    },
+    "discount": {
+      "apply_coupon": {
+        "method": "POST",
+        "path": "/discount/apply",
+        "description": "Apply a discount code to the cart",
+        "parameters": {
+          "code": {
+            "type": "string",
+            "required": true,
+            "description": "Discount code to apply (case-insensitive)"
+          },
+          "cart_id": {
+            "type": "string",
+            "required": true,
+            "description": "Cart to apply discount to"
+          }
+        },
+        "returns": {
+          "discount_amount": {
+            "type": "number",
+            "description": "Amount discounted from subtotal"
+          },
+          "discount_percentage": {
+            "type": "number",
+            "description": "Percentage discount applied"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Whether discount was applied successfully"
+          },
+          "message": {
+            "type": "string",
+            "description": "Success or error message"
+          },
+          "new_total": {
+            "type": "number",
+            "description": "Total after discount"
+          }
+        },
+        "valid_codes": {
+          "SAVE15": {
+            "discount": 0.15,
+            "description": "15% off all products"
+          },
+          "FIRST10": {
+            "discount": 0.10,
+            "description": "10% off for first-time customers"
+          },
+          "WELCOME5": {
+            "discount": 0.05,
+            "description": "5% welcome discount"
+          }
+        },
+        "error_codes": {
+          "INVALID_CODE": "Discount code not found or expired",
+          "CODE_ALREADY_APPLIED": "A discount code is already applied to this cart",
+          "CART_NOT_FOUND": "Cart ID does not exist"
+        },
+        "example_request": {
+          "code": "SAVE15",
+          "cart_id": "cart_abc123"
+        },
+        "example_response_success": {
+          "discount_amount": 194.99,
+          "discount_percentage": 0.15,
+          "success": true,
+          "message": "Discount code SAVE15 applied successfully",
+          "new_total": 1104.98
+        },
+        "example_response_error": {
+          "discount_amount": 0,
+          "discount_percentage": 0,
+          "success": false,
+          "message": "Invalid discount code",
+          "new_total": 1299.97
+        }
+      },
+      "validate_coupon": {
+        "method": "GET",
+        "path": "/discount/validate/{code}",
+        "description": "Check if a discount code is valid",
+        "parameters": {
+          "code": {
+            "type": "string",
+            "required": true,
+            "description": "Discount code to validate"
+          }
+        },
+        "returns": {
+          "valid": {
+            "type": "boolean",
+            "description": "Whether code is valid"
+          },
+          "discount_percentage": {
+            "type": "number",
+            "description": "Discount percentage if valid"
+          },
+          "description": {
+            "type": "string",
+            "description": "Code description"
+          }
+        }
+      }
+    },
+    "order": {
+      "create_order": {
+        "method": "POST",
+        "path": "/order/create",
+        "description": "Create a new order with customer information",
+        "parameters": {
+          "cart_id": {
+            "type": "string",
+            "required": true,
+            "description": "Cart to convert to order"
+          },
+          "customer_name": {
+            "type": "string",
+            "required": true,
+            "description": "Full name of customer",
+            "validation": "Must not be empty"
+          },
+          "customer_email": {
+            "type": "string",
+            "required": true,
+            "description": "Customer email address",
+            "validation": "Must be valid email format with @ symbol"
+          },
+          "customer_phone": {
+            "type": "string",
+            "required": false,
+            "description": "Customer phone number"
+          },
+          "shipping_address": {
+            "type": "string",
+            "required": true,
+            "description": "Full shipping address",
+            "validation": "Must not be empty"
+          },
+          "shipping_method": {
+            "type": "string",
+            "required": true,
+            "enum": ["standard", "express"],
+            "description": "Selected shipping method"
+          },
+          "payment_method": {
+            "type": "string",
+            "required": true,
+            "enum": ["credit-card", "paypal", "bank-transfer"],
+            "description": "Selected payment method"
+          }
+        },
+        "returns": {
+          "order_id": {
+            "type": "string",
+            "description": "Unique order identifier"
+          },
+          "order_total": {
+            "type": "number",
+            "description": "Final order total"
+          },
+          "estimated_delivery": {
+            "type": "string",
+            "description": "Estimated delivery date"
+          },
+          "success": {
+            "type": "boolean",
+            "description": "Whether order was created"
+          },
+          "message": {
+            "type": "string",
+            "description": "Success or error message"
+          }
+        },
+        "validation_errors": {
+          "EMPTY_CART": "Cannot create order with empty cart",
+          "MISSING_NAME": "Customer name is required",
+          "INVALID_EMAIL": "Valid email address is required",
+          "MISSING_ADDRESS": "Shipping address is required",
+          "INVALID_SHIPPING": "Invalid shipping method selected",
+          "INVALID_PAYMENT": "Invalid payment method selected"
+        },
+        "example_request": {
+          "cart_id": "cart_abc123",
+          "customer_name": "John Doe",
+          "customer_email": "john.doe@example.com",
+          "customer_phone": "+1-555-0123",
+          "shipping_address": "123 Main St, Anytown, CA 12345",
+          "shipping_method": "express",
+          "payment_method": "credit-card"
+        },
+        "example_response": {
+          "order_id": "ORD-2025-001234",
+          "order_total": 1114.98,
+          "estimated_delivery": "2025-11-20",
+          "success": true,
+          "message": "Order created successfully"
+        }
+      },
+      "calculate_total": {
+        "method": "POST",
+        "path": "/order/calculate",
+        "description": "Calculate order total with shipping and discounts",
+        "parameters": {
+          "cart_id": {
+            "type": "string",
+            "required": true,
+            "description": "Cart to calculate for"
+          },
+          "shipping_method": {
+            "type": "string",
+            "required": true,
+            "enum": ["standard", "express"],
+            "description": "Shipping method"
+          },
+          "discount_code": {
+            "type": "string",
+            "required": false,
+            "description": "Optional discount code"
+          }
+        },
+        "returns": {
+          "subtotal": {
+            "type": "number",
+            "description": "Sum of cart items"
+          },
+          "discount": {
+            "type": "number",
+            "description": "Discount amount"
+          },
+          "shipping_cost": {
+            "type": "number",
+            "description": "Shipping cost (0 for standard, 10 for express)"
+          },
+          "total": {
+            "type": "number",
+            "description": "Final total amount"
+          },
+          "calculation_formula": {
+            "type": "string",
+            "description": "Formula used: Total = Subtotal - Discount + Shipping"
+          }
+        },
+        "shipping_costs": {
+          "standard": 0,
+          "express": 10
+        }
+      }
+    },
+    "shipping": {
+      "get_shipping_options": {
+        "method": "GET",
+        "path": "/shipping/options",
+        "description": "Get available shipping methods",
+        "returns": {
+          "options": {
+            "type": "array",
+            "description": "Array of shipping options"
+          }
+        },
+        "example_response": {
+          "options": [
+            {
+              "method": "standard",
+              "name": "Standard Shipping",
+              "cost": 0,
+              "delivery_time": "5-7 business days",
+              "tracking": true
+            },
+            {
+              "method": "express",
+              "name": "Express Shipping",
+              "cost": 10,
+              "delivery_time": "1-2 business days",
+              "tracking": true
+            }
+          ]
+        }
+      }
+    },
+    "validation": {
+      "validate_email": {
+        "method": "POST",
+        "path": "/validation/email",
+        "description": "Validate email address format",
+        "parameters": {
+          "email": {
+            "type": "string",
+            "required": true,
+            "description": "Email to validate"
+          }
+        },
+        "returns": {
+          "valid": {
+            "type": "boolean",
+            "description": "Whether email is valid"
+          },
+          "message": {
+            "type": "string",
+            "description": "Validation message"
+          }
+        },
+        "validation_rules": {
+          "must_contain": "@ symbol",
+          "format": "local-part@domain",
+          "required": true
+        }
+      }
+    }
+  },
+  "authentication": {
+    "type": "API Key",
+    "header": "X-API-Key",
+    "description": "API key must be included in request headers"
+  },
+  "rate_limiting": {
+    "requests_per_minute": 60,
+    "requests_per_hour": 1000
+  },
+  "error_format": {
+    "error_code": "string",
+    "message": "string",
+    "details": "object (optional)"
+  }
+}
