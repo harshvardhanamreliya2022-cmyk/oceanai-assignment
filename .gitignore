@@ -16,6 +16,8 @@ parts/
 sdist/
 var/
 wheels/
+pip-wheel-metadata/
+share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
@@ -25,6 +27,8 @@ MANIFEST
 venv/
 env/
 ENV/
+env.bak/
+venv.bak/
 .venv
 
 # IDE
@@ -35,6 +39,20 @@ ENV/
 *~
 .DS_Store
 
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+data/logs/
+
+# Data Directories
+data/uploads/
+data/vectordb/
+data/scripts/
 # Environment variables
 .env
 .env.local
@@ -56,12 +74,53 @@ data/logs/*
 .pytest_cache/
 .coverage
 htmlcov/
+.tox/
+.hypothesis/
+
+# mypy
 
 # MyPy
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
+# Selenium
+geckodriver.log
+chromedriver.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# ChromaDB
+chroma.sqlite3
+chroma-embeddings.parquet
+chroma-collections.parquet
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Model cache
+.cache/
+models/
+
+# Generated files
+generated_scripts/
+test_results/
 # Test outputs
 *.log
 
