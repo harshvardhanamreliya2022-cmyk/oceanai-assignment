@@ -10,7 +10,15 @@ This module provides functionality for:
 """
 
 from .document_loader import DocumentLoader
+from .text_processor import TextProcessor
+from .embeddings import EmbeddingService
+from .vector_store import VectorStoreService
+from .rag_service import RAGService
 
 __all__ = [
     "DocumentLoader",
+    "TextProcessor",
+    "EmbeddingService",
+    "VectorStoreService",
+    "RAGService",
 ]
