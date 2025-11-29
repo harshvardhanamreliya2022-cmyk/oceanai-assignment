@@ -6,7 +6,13 @@ and configuration validation.
 """
 
 from typing import Optional
+from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# Calculate project root (where .env file is located)
+# This file is in backend/app/config.py, so project root is 2 levels up
+PROJECT_ROOT = Path(__file__).parent.parent.parent.resolve()
+ENV_FILE_PATH = PROJECT_ROOT / ".env"
 
 
 class Settings(BaseSettings):
@@ -79,7 +85,7 @@ class Settings(BaseSettings):
     request_timeout: int = 300  # 5 minutes for heavy operations
 
     model_config = SettingsConfigDict(
-        env_file=".env",
+        env_file=str(ENV_FILE_PATH),
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore"
