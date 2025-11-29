@@ -49,9 +49,11 @@ class GenerateScriptRequest(BaseModel):
 
 class ScriptResponse(BaseModel):
     """Response model for generated script."""
-    script_code: str
+    code: str
     test_case_id: str
     validation_status: str
+    validation_warnings: list[str] = []
+    validation_errors: list[str] = []
     selectors_used: list[str]
     file_path: Optional[str] = None
 
@@ -127,9 +129,11 @@ async def generate_selenium_script(request: GenerateScriptRequest):
         file_path = generator.save_script(selenium_script)
 
         return ScriptResponse(
-            script_code=selenium_script.code,
+            code=selenium_script.code,
             test_case_id=selenium_script.test_case_id,
             validation_status=selenium_script.validation_status.value,
+            validation_warnings=selenium_script.validation_warnings,
+            validation_errors=selenium_script.validation_errors,
             selectors_used=selenium_script.selectors_used,
             file_path=file_path
         )
@@ -159,7 +163,7 @@ async def validate_script(request: ValidateScriptRequest):
         generator = get_script_generator()
 
         # Validate syntax
-        from backend.app.models.selenium_script import ScriptStatus
+        from ..models.selenium_script import ScriptStatus
         status, issues = generator._validate_python_syntax(request.script_code)
 
         # Extract selectors
