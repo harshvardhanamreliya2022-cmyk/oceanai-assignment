@@ -115,6 +115,7 @@ class RAGService:
 
             stats = {
                 "status": "success",
+                "message": "Document ingested successfully",
                 "filename": doc.filename,
                 "file_type": doc.file_type,
                 "chunks_created": len(chunks),
