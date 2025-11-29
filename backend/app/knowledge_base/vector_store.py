@@ -100,7 +100,8 @@ class VectorStoreService:
         # Prepare data for ChromaDB
         ids = [chunk.chunk_id for chunk in chunks]
         documents = [chunk.text for chunk in chunks]
-        embeddings_list = [emb.tolist() for emb in embeddings]
+        # Handle both numpy arrays and lists
+        embeddings_list = [emb.tolist() if hasattr(emb, 'tolist') else emb for emb in embeddings]
 
         # Prepare metadata
         metadatas = []
@@ -151,8 +152,11 @@ class VectorStoreService:
         try:
             logger.debug(f"Querying vector store for {n_results} results")
 
+            # Handle both numpy arrays and lists
+            embedding_list = query_embedding.tolist() if hasattr(query_embedding, 'tolist') else query_embedding
+
             results = self.collection.query(
-                query_embeddings=[query_embedding.tolist()],
+                query_embeddings=[embedding_list],
                 n_results=n_results,
                 where=where_filter
             )
@@ -349,7 +353,9 @@ class VectorStoreService:
                 update_data["documents"] = [text]
 
             if embedding is not None:
-                update_data["embeddings"] = [embedding.tolist()]
+                # Handle both numpy arrays and lists
+                embedding_list = embedding.tolist() if hasattr(embedding, 'tolist') else embedding
+                update_data["embeddings"] = [embedding_list]
 
             if metadata is not None:
                 update_data["metadatas"] = [metadata]
