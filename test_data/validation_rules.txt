@@ -1,0 +1,147 @@
+VALIDATION RULES FOR E-COMMERCE CHECKOUT SYSTEM
+================================================
+
+FORM FIELD VALIDATION
+---------------------
+
+Full Name Field:
+- Minimum Length: 2 characters
+- Maximum Length: 100 characters
+- Allowed Characters: Letters, spaces, hyphens, apostrophes
+- Error Message: "Name must be between 2-100 characters"
+- Example Valid: "John Smith", "Mary O'Connor", "Jean-Paul"
+- Example Invalid: "A", "", "John123"
+
+Email Field:
+- Must contain @ symbol
+- Must have domain extension
+- No spaces allowed
+- Error Message: "Please enter a valid email address"
+- Example Valid: "user@example.com", "test.user@domain.co.uk"
+- Example Invalid: "notanemail", "user@", "@domain.com"
+
+Phone Field:
+- Minimum Length: 10 digits
+- Maximum Length: 15 digits
+- Only numeric characters allowed
+- Optional: country code prefix
+- Error Message: "Phone must be 10-15 digits"
+- Example Valid: "5551234567", "15551234567", "442071234567"
+- Example Invalid: "123", "phone", "555-123-4567"
+
+Address Field:
+- Minimum Length: 10 characters
+- Maximum Length: 200 characters
+- Required: street number and name
+- Error Message: "Address must be at least 10 characters"
+- Example Valid: "123 Main Street, Apt 4B"
+- Example Invalid: "Main St", ""
+
+DISCOUNT CODE VALIDATION
+-------------------------
+
+Valid Codes:
+1. SAVE15 - Applies 15% discount
+2. FIRST10 - Applies 10% discount
+3. WELCOME5 - Applies 5% discount
+
+Validation Rules:
+- Codes are case-sensitive (must be uppercase)
+- Only one code per order
+- Code must be exact match
+- No partial matches accepted
+- Error Message: "Invalid discount code"
+
+Examples:
+Valid Input: "SAVE15" -> Apply 15% discount
+Invalid Input: "save15" -> Show error (wrong case)
+Invalid Input: "SAVE20" -> Show error (doesn't exist)
+Invalid Input: "" -> No error, no discount applied
+
+PAYMENT METHOD VALIDATION
+--------------------------
+
+Accepted Methods:
+- Credit Card (default)
+- PayPal
+- Bank Transfer
+
+Rules:
+- One method must be selected
+- Selection stored for order processing
+- No validation required at checkout
+- Actual payment processing is separate
+
+SHIPPING METHOD VALIDATION
+---------------------------
+
+Available Options:
+- Standard Shipping: $0.00 (default)
+- Express Shipping: $10.00
+
+Rules:
+- One method must be selected
+- Default to Standard if none selected
+- Shipping cost added to order total
+- Cannot be combined with free shipping codes
+
+CART VALIDATION
+---------------
+
+Minimum Cart Requirements:
+- At least 1 item in cart
+- Each item quantity >= 1
+- Each item quantity <= 99
+- Cart cannot be empty for checkout
+
+Cart State Validation:
+- Empty Cart: Disable checkout button
+- Invalid Quantity: Reset to 1
+- Out of Stock: Remove from cart
+- Price Changes: Update total immediately
+
+CALCULATION VALIDATION
+----------------------
+
+Order Total Formula:
+Step 1: Calculate Subtotal
+  Subtotal = Sum of (Item Price × Quantity)
+
+Step 2: Apply Discount
+  Discount Amount = Subtotal × Discount Percentage
+  Discounted Subtotal = Subtotal - Discount Amount
+
+Step 3: Add Shipping
+  Final Total = Discounted Subtotal + Shipping Cost
+
+Rounding Rules:
+- All prices rounded to 2 decimal places
+- Rounding method: Standard (0.5 rounds up)
+
+Example Calculation:
+Product: Laptop Pro 15 - $1299.99 × 1
+Product: Wireless Mouse - $29.99 × 2
+Subtotal: $1359.97
+Discount (SAVE15): -$203.99
+Discounted: $1155.98
+Shipping (Express): +$10.00
+Final Total: $1165.98
+
+ERROR HANDLING
+--------------
+
+Network Errors:
+- Timeout after 30 seconds
+- Retry up to 3 times
+- Show user-friendly error message
+
+Form Submission Errors:
+- Validate all fields before submission
+- Highlight first error field
+- Scroll to error location
+- Maintain form data after error
+
+Session Errors:
+- Cart expires after 30 minutes of inactivity
+- Save cart data in browser storage
+- Restore cart on page reload
