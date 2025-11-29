@@ -9,8 +9,8 @@ from abc import ABC, abstractmethod
 
 from groq import Groq
 
-from backend.app.config import settings, validate_llm_config
-from backend.app.utils.logger import setup_logging
+from ..config import settings, validate_llm_config
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

@@ -8,13 +8,13 @@ for the knowledge base system.
 from typing import List, Dict, Optional, Tuple
 from pathlib import Path
 
-from backend.app.knowledge_base.document_loader import DocumentLoader, Document
-from backend.app.knowledge_base.text_processor import TextProcessor, TextChunk
-from backend.app.knowledge_base.embeddings import EmbeddingService
-from backend.app.knowledge_base.vector_store import VectorStoreService
-from backend.app.config import settings
-from backend.app.utils.logger import setup_logging
-from backend.app.utils.filesystem import sanitize_filename
+from .document_loader import DocumentLoader, Document
+from .text_processor import TextProcessor, TextChunk
+from .embeddings import EmbeddingService
+from .vector_store import VectorStoreService
+from ..config import settings
+from ..utils.logger import setup_logging
+from ..utils.filesystem import sanitize_filename
 
 logger = setup_logging()
 

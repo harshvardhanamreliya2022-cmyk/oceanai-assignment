@@ -11,10 +11,10 @@ from pydantic import BaseModel, Field
 import shutil
 from pathlib import Path
 
-from backend.app.knowledge_base import RAGService
-from backend.app.config import settings
-from backend.app.utils.filesystem import ensure_directories, sanitize_filename
-from backend.app.utils.logger import setup_logging
+from ..knowledge_base import RAGService
+from ..config import settings
+from ..utils.filesystem import ensure_directories, sanitize_filename
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

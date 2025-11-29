@@ -13,7 +13,7 @@ import fitz  # PyMuPDF
 from bs4 import BeautifulSoup
 import markdown
 
-from backend.app.utils.logger import setup_logging
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

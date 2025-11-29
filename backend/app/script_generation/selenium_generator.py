@@ -12,12 +12,12 @@ from pathlib import Path
 
 from bs4 import BeautifulSoup
 
-from backend.app.llm import LLMService, PromptTemplates
-from backend.app.models.test_case import TestCase
-from backend.app.models.selenium_script import SeleniumScript, ScriptStatus
-from backend.app.config import settings
-from backend.app.utils.logger import setup_logging
-from backend.app.utils.filesystem import sanitize_filename
+from ..llm import LLMService, PromptTemplates
+from ..models.test_case import TestCase
+from ..models.selenium_script import SeleniumScript, ScriptStatus
+from ..config import settings
+from ..utils.logger import setup_logging
+from ..utils.filesystem import sanitize_filename
 
 logger = setup_logging()
 

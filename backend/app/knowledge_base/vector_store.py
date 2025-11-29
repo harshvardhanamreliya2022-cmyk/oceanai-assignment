@@ -10,9 +10,9 @@ import chromadb
 from chromadb.config import Settings as ChromaSettings
 import numpy as np
 
-from backend.app.config import settings
-from backend.app.knowledge_base.text_processor import TextChunk
-from backend.app.utils.logger import setup_logging
+from ..config import settings
+from .text_processor import TextChunk
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 
