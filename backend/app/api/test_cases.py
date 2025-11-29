@@ -140,7 +140,7 @@ async def validate_test_case(request: ValidateTestCaseRequest):
     Returns validation results with issues and suggestions.
     """
     try:
-        from backend.app.models.test_case import TestCase, TestType
+        from ..models.test_case import TestCase, TestType
 
         generator = get_test_generator()
 
