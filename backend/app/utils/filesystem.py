@@ -9,7 +9,7 @@ from pathlib import Path
 from typing import List
 import logging
 
-from backend.app.config import settings
+from ..config import settings
 
 logger = logging.getLogger(__name__)
 

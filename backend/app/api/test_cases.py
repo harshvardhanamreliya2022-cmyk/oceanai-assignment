@@ -9,9 +9,9 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 
-from backend.app.test_generation import TestCaseGenerator
-from backend.app.models.schemas import GenerateTestCasesRequest, TestCaseResponse
-from backend.app.utils.logger import setup_logging
+from ..test_generation import TestCaseGenerator
+from ..models.schemas import GenerateTestCasesRequest, TestCaseResponse
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

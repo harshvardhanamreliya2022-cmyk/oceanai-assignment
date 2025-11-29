@@ -8,11 +8,11 @@ import json
 import re
 from typing import List, Dict, Optional
 
-from backend.app.knowledge_base import RAGService
-from backend.app.llm import LLMService, PromptTemplates
-from backend.app.models.test_case import TestCase, TestType
-from backend.app.config import settings
-from backend.app.utils.logger import setup_logging
+from ..knowledge_base import RAGService
+from ..llm import LLMService, PromptTemplates
+from ..models.test_case import TestCase, TestType
+from ..config import settings
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

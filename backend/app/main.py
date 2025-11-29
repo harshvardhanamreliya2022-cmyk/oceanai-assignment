@@ -9,9 +9,9 @@ from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.app.api import knowledge_base, test_cases, selenium_scripts
-from backend.app.utils.filesystem import ensure_directories
-from backend.app.utils.logger import setup_logging
+from .api import knowledge_base, test_cases, selenium_scripts
+from .utils.filesystem import ensure_directories
+from .utils.logger import setup_logging
 
 # Setup logging
 logger = setup_logging()

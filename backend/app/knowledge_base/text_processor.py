@@ -10,8 +10,8 @@ from dataclasses import dataclass
 
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from backend.app.config import settings
-from backend.app.utils.logger import setup_logging
+from ..config import settings
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

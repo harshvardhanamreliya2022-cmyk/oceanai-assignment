@@ -9,8 +9,8 @@ from typing import List
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from backend.app.config import settings
-from backend.app.utils.logger import setup_logging
+from ..config import settings
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 

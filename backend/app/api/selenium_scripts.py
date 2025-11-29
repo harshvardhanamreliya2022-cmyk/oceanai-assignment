@@ -10,9 +10,9 @@ from fastapi.responses import JSONResponse, FileResponse
 from pydantic import BaseModel, Field
 from pathlib import Path
 
-from backend.app.script_generation import SeleniumScriptGenerator
-from backend.app.models.test_case import TestCase, TestType
-from backend.app.utils.logger import setup_logging
+from ..script_generation import SeleniumScriptGenerator
+from ..models.test_case import TestCase, TestType
+from ..utils.logger import setup_logging
 
 logger = setup_logging()
 
