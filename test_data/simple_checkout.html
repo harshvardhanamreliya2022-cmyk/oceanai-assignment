@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Checkout - Test Page</title>
+</head>
+<body>
+    <div id="checkout-container">
+        <h1>Checkout</h1>
+
+        <!-- Cart Section -->
+        <div id="cart-section">
+            <h2>Shopping Cart</h2>
+            <div id="cart-items">
+                <div class="cart-item" data-product-id="laptop-001">
+                    <span class="product-name">Laptop Pro 15</span>
+                    <span class="product-price">$1299.99</span>
+                    <input type="number" class="quantity-input" id="qty-laptop" value="1" min="1" max="99">
+                    <button class="remove-btn" data-product="laptop-001">Remove</button>
+                </div>
+                <div class="cart-item" data-product-id="mouse-002">
+                    <span class="product-name">Wireless Mouse</span>
+                    <span class="product-price">$29.99</span>
+                    <input type="number" class="quantity-input" id="qty-mouse" value="1" min="1" max="99">
+                    <button class="remove-btn" data-product="mouse-002">Remove</button>
+                </div>
+            </div>
+
+            <!-- Discount Code -->
+            <div id="discount-section">
+                <label for="discount-code">Discount Code:</label>
+                <input type="text" id="discount-code" name="discountCode" placeholder="Enter code">
+                <button id="apply-discount-btn">Apply</button>
+                <span id="discount-error" class="error-message" style="display:none;"></span>
+            </div>
+
+            <!-- Cart Summary -->
+            <div id="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">$1329.98</span>
+                </div>
+                <div class="summary-row">
+                    <span>Discount:</span>
+                    <span id="discount-amount">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="shipping-cost">$0.00</span>
+                </div>
+                <div class="summary-row total-row">
+                    <strong>Total:</strong>
+                    <strong id="final-total">$1329.98</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Information Form -->
+        <div id="customer-form">
+            <h2>Customer Information</h2>
+            <form id="checkout-form">
+                <div class="form-group">
+                    <label for="full-name">Full Name *</label>
+                    <input type="text" id="full-name" name="fullName" required>
+                    <span class="field-error" id="name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                    <span class="field-error" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                    <span class="field-error" id="phone-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Shipping Address *</label>
+                    <textarea id="address" name="address" rows="3" required></textarea>
+                    <span class="field-error" id="address-error"></span>
+                </div>
+
+                <!-- Shipping Method -->
+                <div class="form-group">
+                    <label>Shipping Method *</label>
+                    <div class="radio-group">
+                        <input type="radio" id="shipping-standard" name="shippingMethod" value="standard" checked>
+                        <label for="shipping-standard">Standard Shipping (Free - 5-7 days)</label>
+                    </div>
+                    <div class="radio-group">
+                        <input type="radio" id="shipping-express" name="shippingMethod" value="express">
+                        <label for="shipping-express">Express Shipping ($10.00 - 2-3 days)</label>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-group">
+                    <label>Payment Method *</label>
+                    <select id="payment-method" name="paymentMethod" required>
+                        <option value="">Select payment method</option>
+                        <option value="credit_card">Credit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="bank_transfer">Bank Transfer</option>
+                    </select>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-actions">
+                    <button type="submit" id="submit-order-btn" class="btn-primary">Place Order</button>
+                    <button type="button" id="cancel-btn" class="btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Order Confirmation (hidden by default) -->
+        <div id="order-confirmation" style="display:none;">
+            <h2>Order Confirmed!</h2>
+            <p>Thank you for your order.</p>
+            <p>Order ID: <span id="order-id"></span></p>
+            <p>Total Amount: <span id="confirmed-total"></span></p>
+        </div>
+    </div>
+</body>
+</html>

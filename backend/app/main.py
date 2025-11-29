@@ -9,7 +9,7 @@ from datetime import datetime
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.app.api import knowledge_base, test_cases
+from backend.app.api import knowledge_base, test_cases, selenium_scripts
 from backend.app.utils.filesystem import ensure_directories
 from backend.app.utils.logger import setup_logging
 
@@ -92,8 +92,7 @@ async def root():
 # API Routes
 app.include_router(knowledge_base.router)
 app.include_router(test_cases.router)
-
-# TODO: Add Selenium script generation routes
+app.include_router(selenium_scripts.router)
 
 
 if __name__ == "__main__":

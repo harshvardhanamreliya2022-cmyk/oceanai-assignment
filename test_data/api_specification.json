@@ -1,0 +1,225 @@
+{
+  "api_name": "E-Commerce Checkout API",
+  "version": "2.0",
+  "base_url": "https://api.example.com/v2",
+  "endpoints": {
+    "cart": {
+      "get_cart": {
+        "method": "GET",
+        "path": "/cart",
+        "description": "Retrieve current shopping cart",
+        "response": {
+          "items": "array",
+          "subtotal": "number",
+          "total": "number"
+        }
+      },
+      "add_item": {
+        "method": "POST",
+        "path": "/cart/items",
+        "description": "Add item to cart",
+        "request_body": {
+          "product_id": "string (required)",
+          "quantity": "integer (required, min: 1, max: 99)"
+        },
+        "response": {
+          "success": "boolean",
+          "cart_total": "number"
+        },
+        "errors": {
+          "400": "Invalid product_id or quantity",
+          "404": "Product not found",
+          "409": "Product out of stock"
+        }
+      },
+      "remove_item": {
+        "method": "DELETE",
+        "path": "/cart/items/{product_id}",
+        "description": "Remove item from cart",
+        "parameters": {
+          "product_id": "string (required)"
+        },
+        "response": {
+          "success": "boolean",
+          "items_remaining": "integer"
+        }
+      },
+      "update_quantity": {
+        "method": "PATCH",
+        "path": "/cart/items/{product_id}",
+        "description": "Update item quantity",
+        "parameters": {
+          "product_id": "string (required)"
+        },
+        "request_body": {
+          "quantity": "integer (required, min: 1, max: 99)"
+        },
+        "response": {
+          "success": "boolean",
+          "new_quantity": "integer",
+          "cart_total": "number"
+        }
+      }
+    },
+    "discount": {
+      "apply_coupon": {
+        "method": "POST",
+        "path": "/discount/apply",
+        "description": "Apply discount code to cart",
+        "request_body": {
+          "code": "string (required)"
+        },
+        "valid_codes": {
+          "SAVE15": {
+            "discount": 0.15,
+            "description": "15% off total"
+          },
+          "FIRST10": {
+            "discount": 0.10,
+            "description": "10% off total"
+          },
+          "WELCOME5": {
+            "discount": 0.05,
+            "description": "5% off total"
+          }
+        },
+        "response": {
+          "success": "boolean",
+          "discount_applied": "number",
+          "new_total": "number"
+        },
+        "errors": {
+          "400": "Invalid discount code",
+          "409": "Discount code already applied"
+        }
+      },
+      "remove_coupon": {
+        "method": "DELETE",
+        "path": "/discount/remove",
+        "description": "Remove applied discount code",
+        "response": {
+          "success": "boolean",
+          "total": "number"
+        }
+      }
+    },
+    "checkout": {
+      "submit_order": {
+        "method": "POST",
+        "path": "/checkout/submit",
+        "description": "Submit order for processing",
+        "request_body": {
+          "customer": {
+            "name": "string (required, 2-100 chars)",
+            "email": "string (required, valid email)",
+            "phone": "string (required, 10-15 digits)",
+            "address": "string (required, min 10 chars)"
+          },
+          "shipping_method": {
+            "type": "string (required)",
+            "allowed_values": ["standard", "express"],
+            "cost": {
+              "standard": 0,
+              "express": 10
+            }
+          },
+          "payment_method": {
+            "type": "string (required)",
+            "allowed_values": ["credit_card", "paypal", "bank_transfer"]
+          }
+        },
+        "response": {
+          "order_id": "string",
+          "status": "string",
+          "total_amount": "number",
+          "estimated_delivery": "string (ISO date)"
+        },
+        "errors": {
+          "400": "Invalid customer information",
+          "402": "Payment processing failed",
+          "409": "Cart is empty",
+          "422": "Validation error"
+        }
+      },
+      "validate_form": {
+        "method": "POST",
+        "path": "/checkout/validate",
+        "description": "Validate checkout form data",
+        "request_body": {
+          "field": "string (required)",
+          "value": "string (required)"
+        },
+        "validation_rules": {
+          "name": {
+            "min_length": 2,
+            "max_length": 100,
+            "pattern": "^[a-zA-Z\\s'-]+$"
+          },
+          "email": {
+            "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          },
+          "phone": {
+            "min_length": 10,
+            "max_length": 15,
+            "pattern": "^[0-9]+$"
+          },
+          "address": {
+            "min_length": 10,
+            "max_length": 200
+          }
+        },
+        "response": {
+          "valid": "boolean",
+          "error_message": "string (if invalid)"
+        }
+      }
+    },
+    "shipping": {
+      "calculate_cost": {
+        "method": "POST",
+        "path": "/shipping/calculate",
+        "description": "Calculate shipping cost",
+        "request_body": {
+          "method": "string (required)",
+          "cart_total": "number (required)"
+        },
+        "shipping_rates": {
+          "standard": {
+            "cost": 0,
+            "delivery_days": "5-7"
+          },
+          "express": {
+            "cost": 10,
+            "delivery_days": "2-3"
+          }
+        },
+        "response": {
+          "shipping_cost": "number",
+          "delivery_estimate": "string",
+          "total_with_shipping": "number"
+        }
+      }
+    }
+  },
+  "authentication": {
+    "type": "Bearer Token",
+    "header": "Authorization: Bearer {token}",
+    "token_expiry": "24 hours"
+  },
+  "rate_limiting": {
+    "requests_per_minute": 60,
+    "requests_per_hour": 1000,
+    "error_code": 429
+  },
+  "response_codes": {
+    "200": "Success",
+    "201": "Created",
+    "400": "Bad Request - Invalid input",
+    "401": "Unauthorized - Invalid token",
+    "404": "Not Found - Resource doesn't exist",
+    "409": "Conflict - Business rule violation",
+    "422": "Unprocessable Entity - Validation failed",
+    "429": "Too Many Requests - Rate limit exceeded",
+    "500": "Internal Server Error"
+  }
+}
