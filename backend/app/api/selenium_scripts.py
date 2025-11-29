@@ -219,10 +219,15 @@ async def download_script(test_case_id: str):
         )
 
 
+class ExtractSelectorsRequest(BaseModel):
+    """Request model for extracting selectors from HTML."""
+    html_content: str = Field(..., description="HTML content to analyze")
+
+
 @router.post("/extract-selectors")
-async def extract_selectors(file: UploadFile = File(...)):
+async def extract_selectors(request: ExtractSelectorsRequest):
     """
-    Extract HTML selectors from uploaded HTML file.
+    Extract HTML selectors from HTML content.
 
     Analyzes HTML structure and returns prioritized selectors:
     - ID selectors (highest stability)
@@ -235,16 +240,11 @@ async def extract_selectors(file: UploadFile = File(...)):
     try:
         generator = get_script_generator()
 
-        # Read HTML content
-        html_content = await file.read()
-        html_text = html_content.decode('utf-8')
-
         # Extract selectors
-        selectors = generator._extract_selectors(html_text)
+        selectors = generator._extract_selectors(request.html_content)
 
         return JSONResponse(
             content={
-                "filename": file.filename,
                 "total_selectors": len(selectors),
                 "selectors": selectors
             }
